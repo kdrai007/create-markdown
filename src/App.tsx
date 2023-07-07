@@ -67,6 +67,26 @@ function App() {
       })
     })
   }
+
+  function onUpdateTag(id: string, label: string) {
+    setTags(prevTags => {
+      return prevTags.map(tag => {
+        if (tag.id === id) {
+          return { ...tag, label }
+        } else {
+          return tag;
+        }
+      })
+    })
+  }
+  function onDeleteTag(id: string) {
+    setTags(prevTags => {
+      return prevTags.filter(tag => {
+        return tag.id !== id;
+      })
+    })
+  }
+
   function addTag(tag: Tag) {
     setTags(prev => [...prev, tag]);
   }
@@ -76,7 +96,7 @@ function App() {
       <Container className='my-4'>
         <Routes>
           <Route path='/' element=
-            {<Home availableTags={tags} notes={notesWithTags} />} />
+            {<Home availableTags={tags} notes={notesWithTags} onUpdateTag={onUpdateTag} onDeleteTag={onDeleteTag} />} />
           <Route path='/new' element={<NewNote
             onSubmit={onCreateNote}
             onAddTag={addTag}
